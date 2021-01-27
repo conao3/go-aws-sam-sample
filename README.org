@@ -21,9 +21,57 @@
 * Description
 SAM sample using golang lambda.
 
-* Install
-
 * Usage
+** API
+#+begin_src sh
+curl https://xxxxxcfo28.execute-api.ap-northeast-1.amazonaws.com/Prod/hello/
+#+end_src
+
+* Develop
+** Requirements
+- [[https://github.com/aws/aws-cli][aws]] - 2.1.21
+  - [[https://www.python.org/][python]] - 3.8.6
+- [[https://github.com/aws/aws-sam-cli][sam]] - 1.15.0
+  - (python - 3.8.6)
+  - [[https://www.docker.com/][docker]] - 20.10.2
+- [[https://golang.org/][golang]] - 1.15.2
+
+*** Quick install
+#+begin_src sh
+# docker
+yay -S docker
+sudo gpasswd -a $USER docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# aws, sam
+yay -S anyenv
+anyenv init
+anyenv install --init
+anyenv install pyenv
+echo 'if which anyenv > /dev/null 2>&1; then eval "$(anyenv init -)"; fi' > ~/.bash_profile
+eval "$(anyenv init -)"
+pyenv install -l
+pyenv install 3.8.6
+pyenv global 3.8.6
+pip install -U pip
+pip install awscli aws-sam-cli
+
+# golang
+yay -S go
+#+end_src
+
+** Deploy
+#+begin_src sh
+  ## first deploy
+  sam build && sam deploy --guided
+#+end_src
+
+#+begin_src sh
+  ## after first deploy
+  sam build && sam deploy
+#+end_src
+
 
 * Information
 ** Community
