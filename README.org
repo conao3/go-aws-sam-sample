@@ -1,94 +1,100 @@
+#+title: go-aws-sam-sample
 #+author: conao3
-#+date: <2020-03-20 Fri>
 
 [[https://github.com/conao3/go-aws-sam-sample][https://raw.githubusercontent.com/conao3/files/master/blob/headers/png/go-aws-sam-sample.png]]
+
 [[https://github.com/conao3/go-aws-sam-sample/blob/master/LICENSE][https://img.shields.io/github/license/conao3/go-aws-sam-sample.svg?style=flat-square]]
 [[https://github.com/conao3/go-aws-sam-sample/releases][https://img.shields.io/github/tag/conao3/go-aws-sam-sample.svg?style=flat-square]]
-[[https://github.com/conao3/go-aws-sam-sample/actions][https://img.shields.io/badge/patreon-become%20a%20patron-orange.svg?logo=patreon&style=flat-square]]
-[[https://twitter.com/conao_3][https://img.shields.io/badge/twitter-@conao__3-blue.svg?logo=twitter&style=flat-square]]
-[[https://conao3-support.slack.com/join/shared_invite/enQtNjUzMDMxODcyMjE1LWUwMjhiNTU3Yjk3ODIwNzAxMTgwOTkxNmJiN2M4OTZkMWY0NjI4ZTg4MTVlNzcwNDY2ZjVjYmRiZmJjZDU4MDE][https://img.shields.io/badge/chat-on_slack-blue.svg?logo=slack&style=flat-square]]
 
-* Table of Contents
-- [[#description][Description]]
-- [[#install][Install]]
-- [[#usage][Usage]]
-- [[#information][Information]]
-  - [[#community][Community]]
-  - [[#contribution][Contribution]]
-  - [[#license][License]]
-  - [[#author][Author]]
+A sample project demonstrating how to build and deploy serverless applications on AWS using the Serverless Application Model (SAM) with Go.
 
-* Description
-SAM sample using golang lambda.
+* Overview
 
-* Usage
-** API
-#+begin_src sh
-curl https://xxxxxcfo28.execute-api.ap-northeast-1.amazonaws.com/Prod/hello/
-#+end_src
+This repository provides a minimal, working example of an AWS Lambda function written in Go, deployed via AWS SAM. The sample function exposes an HTTP endpoint that returns a greeting along with the caller's IP address.
 
-* Develop
-** Requirements
-- [[https://github.com/aws/aws-cli][aws]] - 2.1.21
-  - [[https://www.python.org/][python]] - 3.8.6
-- [[https://github.com/aws/aws-sam-cli][sam]] - 1.15.0
-  - (python - 3.8.6)
-  - [[https://www.docker.com/][docker]] - 20.10.2
-- [[https://golang.org/][golang]] - 1.15.2
+* Features
 
-*** Quick install
-#+begin_src sh
-# docker
-yay -S docker
-sudo gpasswd -a $USER docker
-sudo systemctl enable docker
-sudo systemctl start docker
+- Go-based Lambda function with API Gateway integration
+- AWS SAM template for infrastructure as code
+- Simple deployment workflow using SAM CLI
+- Includes unit tests for the Lambda handler
 
-# aws, sam
-yay -S anyenv
-anyenv init
-anyenv install --init
-anyenv install pyenv
-echo 'if which anyenv > /dev/null 2>&1; then eval "$(anyenv init -)"; fi' > ~/.bash_profile
-eval "$(anyenv init -)"
-pyenv install -l
-pyenv install 3.8.6
-pyenv global 3.8.6
-pip install -U pip
-pip install awscli aws-sam-cli
+* Prerequisites
 
-# golang
-yay -S go
-#+end_src
+Before getting started, ensure you have the following installed:
 
-** Deploy
-#+begin_src sh
-  ## first deploy
-  sam build && sam deploy --guided
-#+end_src
+- [[https://golang.org/][Go]] (1.15 or later)
+- [[https://docs.docker.com/get-docker/][Docker]]
+- [[https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html][AWS CLI]]
+- [[https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html][AWS SAM CLI]]
+- An AWS account with appropriate permissions
+
+* Getting Started
+
+** Installation
+
+Clone the repository:
 
 #+begin_src sh
-  ## after first deploy
-  sam build && sam deploy
+git clone https://github.com/conao3/go-aws-sam-sample.git
+cd go-aws-sam-sample
 #+end_src
 
+** Building the Application
 
-* Information
-** Community
-All feedback and suggestions are welcome!
+Use SAM CLI to build the Lambda function:
 
-You can use github issues, but you can also use [[https://conao3-support.slack.com/join/shared_invite/enQtNjUzMDMxODcyMjE1LWUwMjhiNTU3Yjk3ODIwNzAxMTgwOTkxNmJiN2M4OTZkMWY0NjI4ZTg4MTVlNzcwNDY2ZjVjYmRiZmJjZDU4MDE][Slack]]
-if you want a more casual conversation.
+#+begin_src sh
+sam build
+#+end_src
 
-** Contribution
-We welcome PR!
+** Deploying to AWS
 
-** License
+For the initial deployment, run the guided deploy to configure your stack:
+
+#+begin_src sh
+sam build && sam deploy --guided
+#+end_src
+
+For subsequent deployments, you can simply run:
+
+#+begin_src sh
+sam build && sam deploy
+#+end_src
+
+** Testing the API
+
+Once deployed, you can test the endpoint using curl:
+
+#+begin_src sh
+curl https://<your-api-id>.execute-api.<region>.amazonaws.com/Prod/hello/
+#+end_src
+
+The API Gateway endpoint URL will be displayed in the deployment output.
+
+* Project Structure
+
 #+begin_example
-  MIT License
-  Copyright (c) Naoya Yamashita - https://conao3.com
-  https://github.com/conao3/go-aws-sam-sample/blob/master/LICENSE
+.
+├── app/
+│   └── hello-world/      # Lambda function source code
+│       ├── main.go       # Handler implementation
+│       ├── main_test.go  # Unit tests
+│       ├── go.mod
+│       └── go.sum
+├── template.yaml         # SAM template
+├── Makefile
+└── README.org
 #+end_example
 
-** Author
+* Contributing
+
+Contributions are welcome. Feel free to open an issue or submit a pull request if you have suggestions for improvements.
+
+* License
+
+This project is licensed under the MIT License. See the [[https://github.com/conao3/go-aws-sam-sample/blob/master/LICENSE][LICENSE]] file for details.
+
+* Author
+
 - Naoya Yamashita ([[https://github.com/conao3][conao3]])
