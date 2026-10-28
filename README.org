@@ -23,7 +23,7 @@ This repository provides a minimal, working example of an AWS Lambda function wr
 
 Before getting started, ensure you have the following installed:
 
-- [[https://golang.org/][Go]] (1.15 or later)
+- [[https://golang.org/][Go]] (1.27 or later)
 - [[https://docs.docker.com/get-docker/][Docker]]
 - [[https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html][AWS CLI]]
 - [[https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html][AWS SAM CLI]]
